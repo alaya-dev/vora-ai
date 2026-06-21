@@ -6,14 +6,14 @@
     @if(auth()->user()->role !== 'admin')
         <x-slot name="header">
             <h2 class="font-bold text-2xl text-gray-900 leading-tight">
-                {{ __('messages.nav.profile') }}
+                {{ __('profile.title') }}
             </h2>
         </x-slot>
     @else
         <!-- Admin header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('messages.nav.profile') }}</h1>
-            <p class="mt-1.5 text-sm text-gray-500">{{ __('messages.profile.desc') }}</p>
+            <h1 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('profile.title') }}</h1>
+            <p class="mt-1.5 text-sm text-gray-500">{{ __('profile.desc') }}</p>
         </div>
     @endif
 

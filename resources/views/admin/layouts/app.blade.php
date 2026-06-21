@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Vora AI') }} - {{ __('messages.nav.dashboard') }}</title>
+    <title>{{ config('app.name', 'Vora AI') }} - {{ __('dashboard.title') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,7 @@
                         <svg class="w-5 h-5 me-3 flex-shrink-0 transition-colors {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-slate-400 group-hover:text-white' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
-                        {{ __('messages.nav.dashboard') }}
+                        {{ __('dashboard.title') }}
                     </a>
 
                     <a href="{{ route('admin.users.index') }}" 
@@ -58,7 +58,7 @@
                         <svg class="w-5 h-5 me-3 flex-shrink-0 transition-colors {{ request()->routeIs('admin.users.*') ? 'text-white' : 'text-slate-400 group-hover:text-white' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        {{ __('messages.nav.users') }}
+                        {{ __('users.title') }}
                     </a>
 
                     <a href="{{ route('profile.edit') }}" 
@@ -66,7 +66,7 @@
                         <svg class="w-5 h-5 me-3 flex-shrink-0 transition-colors {{ request()->routeIs('profile.edit') ? 'text-white' : 'text-slate-400 group-hover:text-white' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        {{ __('messages.nav.profile') }}
+                        {{ __('profile.title') }}
                     </a>
                 </nav>
             </div>
@@ -79,7 +79,7 @@
                         <svg class="w-5 h-5 me-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
-                        {{ __('messages.auth.logout') }}
+                        {{ __('auth.logout') }}
                     </button>
                 </form>
             </div>
@@ -110,7 +110,7 @@
 
                     <!-- Breadcrumbs / Greeting -->
                     <div class="hidden sm:block">
-                        <p class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ __('messages.dashboard.welcome_back') }}</p>
+                        <p class="text-xs font-medium text-gray-400 uppercase tracking-wider">{{ __('dashboard.welcome_back') }}</p>
                         <p class="text-sm font-semibold text-gray-700">{{ auth()->user()->name }}</p>
                     </div>
                 </div>
@@ -175,14 +175,14 @@
                             class="absolute {{ app()->getLocale() === 'ar' ? 'left-0' : 'right-0' }} mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-1 overflow-hidden"
                             style="display: none;">
                             <div class="px-4 py-2.5 border-b border-gray-100 bg-gray-50/50">
-                                <p class="text-xs text-gray-400">{{ __('messages.users.table.role') }}</p>
-                                <p class="text-sm font-semibold text-gray-700 capitalize">{{ auth()->user()->role === 'admin' ? __('messages.users.form.admin') : __('messages.users.form.user') }}</p>
+                                <p class="text-xs text-gray-400">{{ __('users.role') }}</p>
+                                <p class="text-sm font-semibold text-gray-700 capitalize">{{ auth()->user()->role === 'admin' ? __('users.form.admin') : __('users.form.user') }}</p>
                             </div>
                             <a href="{{ route('profile.edit') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
                                 <svg class="w-4 h-4 me-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                {{ __('messages.nav.profile') }}
+                                {{ __('profile.title') }}
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -190,7 +190,7 @@
                                     <svg class="w-4 h-4 me-2 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    {{ __('messages.auth.logout') }}
+                                    {{ __('auth.logout') }}
                                 </button>
                             </form>
                         </div>

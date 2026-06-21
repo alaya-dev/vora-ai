@@ -1,0 +1,22 @@
+<?php
+return [
+    'login' => 'Connexion',
+    'register' => "S'inscrire",
+    'forgot_password' => 'Mot de passe oublié ?',
+    'reset_password' => 'Réinitialiser le mot de passe',
+    'email' => 'Adresse e-mail',
+    'password' => 'Mot de passe',
+    'confirm_password' => 'Confirmer le mot de passe',
+    'remember_me' => 'Se souvenir de moi',
+    'already_registered' => 'Déjà inscrit ?',
+    'dont_have_account' => "Vous n'avez pas de compte ?",
+    'register_here' => "S'inscrire ici",
+    'send_reset_link' => 'Envoyer le lien de réinitialisation',
+    'welcome_back' => 'Bon retour ! Veuillez saisir vos identifiants.',
+    'create_account' => 'Créez votre compte pour commencer.',
+    'forgot_password_desc' => "Mot de passe oublié ? Pas de problème. Indiquez-nous simplement votre adresse e-mail et nous vous enverrons un lien de réinitialisation qui vous permettra d'en choisir un nouveau.",
+    'logout' => 'Se déconnecter',
+    'verify_email_desc' => "Merci pour votre inscription! Avant de commencer, pourriez-vous vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer par e-mail ? Si vous n'avez pas reçu l'e-mail, nous vous en enverrons un autre avec plaisir.",
+    'verify_email_sent' => "Un nouveau lien de vérification a été envoyé à l'adresse e-mail fournie lors de l'inscription.",
+    'resend_verification_email' => "Renvoyer l'e-mail de vérification",
+];

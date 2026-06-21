@@ -1,18 +1,18 @@
 <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('messages.profile.delete.title') }}
+            {{ __('profile.delete.title') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __('messages.profile.delete.desc') }}
+            {{ __('profile.delete.desc') }}
         </p>
     </header>
 
     <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('messages.profile.delete.btn') }}</x-danger-button>
+    >{{ __('profile.delete.btn') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
@@ -20,22 +20,22 @@
             @method('delete')
 
             <h2 class="text-lg font-medium text-gray-900">
-                {{ __('messages.profile.delete.confirm_title') }}
+                {{ __('profile.delete.confirm_title') }}
             </h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                {{ __('messages.profile.delete.confirm_desc') }}
+                {{ __('profile.delete.confirm_desc') }}
             </p>
 
             <div class="mt-6">
-                <x-input-label for="password" value="{{ __('messages.auth.password') }}" class="sr-only" />
+                <x-input-label for="password" value="{{ __('auth.password') }}" class="sr-only" />
 
                 <x-text-input
                     id="password"
                     name="password"
                     type="password"
                     class="mt-1 block w-3/4"
-                    placeholder="{{ __('messages.auth.password') }}"
+                    placeholder="{{ __('auth.password') }}"
                 />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
@@ -43,11 +43,11 @@
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('messages.users.cancel') }}
+                    {{ __('users.cancel') }}
                 </x-secondary-button>
 
                 <x-danger-button class="ms-3">
-                    {{ __('messages.profile.delete.btn') }}
+                    {{ __('profile.delete.btn') }}
                 </x-danger-button>
             </div>
         </form>

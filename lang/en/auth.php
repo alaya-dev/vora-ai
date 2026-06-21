@@ -1,0 +1,22 @@
+<?php
+return [
+    'login' => 'Log In',
+    'register' => 'Register',
+    'forgot_password' => 'Forgot Password?',
+    'reset_password' => 'Reset Password',
+    'email' => 'Email Address',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
+    'remember_me' => 'Remember me',
+    'already_registered' => 'Already registered?',
+    'dont_have_account' => "Don't have an account?",
+    'register_here' => 'Register here',
+    'send_reset_link' => 'Email Password Reset Link',
+    'welcome_back' => 'Welcome back! Please enter your details.',
+    'create_account' => 'Create your account to get started.',
+    'forgot_password_desc' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
+    'logout' => 'Log Out',
+    'verify_email_desc' => "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
+    'verify_email_sent' => 'A new verification link has been sent to the email address you provided during registration.',
+    'resend_verification_email' => 'Resend Verification Email',
+];

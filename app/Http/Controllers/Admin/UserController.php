@@ -60,7 +60,7 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')
-            ->with('success', __('messages.alerts.user_created'));
+            ->with('success', __('alerts.user_created'));
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
         $user->update($data);
 
         return redirect()->route('admin.users.index')
-            ->with('success', __('messages.alerts.user_updated'));
+            ->with('success', __('alerts.user_updated'));
     }
 
     /**
@@ -106,12 +106,12 @@ class UserController extends Controller
     {
         if (auth()->id() === $user->id) {
             return redirect()->route('admin.users.index')
-                ->with('error', __('messages.alerts.self_delete'));
+                ->with('error', __('alerts.self_delete'));
         }
 
         $user->delete();
 
         return redirect()->route('admin.users.index')
-            ->with('success', __('messages.alerts.user_deleted'));
+            ->with('success', __('alerts.user_deleted'));
     }
 }
