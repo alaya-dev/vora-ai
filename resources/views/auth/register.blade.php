@@ -1,52 +1,67 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <!-- Header -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">{{ __('messages.auth.register') }}</h2>
+        <p class="mt-1 text-sm text-gray-500">{{ __('messages.auth.create_account') }}</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">{{ __('messages.users.form.name') }}</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name"
+                class="w-full px-4 py-2.5 bg-gray-50/50 border @error('name') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+            @error('name')
+                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">{{ __('messages.auth.email') }}</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username"
+                class="w-full px-4 py-2.5 bg-gray-50/50 border @error('email') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+            @error('email')
+                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">{{ __('messages.auth.password') }}</label>
+            <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="••••••••"
+                class="w-full px-4 py-2.5 bg-gray-50/50 border @error('password') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+            @error('password')
+                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div>
+            <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">{{ __('messages.auth.confirm_password') }}</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••"
+                class="w-full px-4 py-2.5 bg-gray-50/50 border @error('password_confirmation') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+            @error('password_confirmation')
+                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        <!-- Submit & Login Link -->
+        <div class="pt-2">
+            <button type="submit" class="w-full flex items-center justify-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition duration-150">
+                {{ __('messages.auth.register') }}
+            </button>
+        </div>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <div class="text-center pt-2">
+            <p class="text-sm text-gray-500">
+                {{ __('messages.auth.already_registered') }} 
+                <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:text-indigo-700 transition duration-150">
+                    {{ __('messages.auth.login') }}
+                </a>
+            </p>
         </div>
     </form>
 </x-guest-layout>
