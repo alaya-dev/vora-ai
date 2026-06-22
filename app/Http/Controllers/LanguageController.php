@@ -14,6 +14,7 @@ class LanguageController extends Controller
     {
         if (in_array($locale, ['en', 'fr', 'ar'])) {
             Session::put('locale', $locale);
+            Session::save();
         }
 
         return redirect()->back();

@@ -117,7 +117,7 @@
 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <!-- Language Switcher -->
-                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-1.5 rtl:space-x-reverse px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 text-sm font-medium text-gray-600 transition duration-150">
                             <span>
                                 @if(app()->getLocale() === 'en')
@@ -133,7 +133,7 @@
                             </svg>
                         </button>
                         
-                        <div x-show="open" 
+                        <div x-show="open" @click.outside="open = false"
                             x-transition:enter="transition ease-out duration-100"
                             x-transition:enter-start="transform opacity-0 scale-95"
                             x-transition:enter-end="transform opacity-100 scale-100"
@@ -158,14 +158,14 @@
                     <div class="h-6 w-px bg-gray-200"></div>
 
                     <!-- User Menu -->
-                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 rtl:space-x-reverse focus:outline-none">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-semibold text-sm">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                             </span>
                         </button>
                         
-                        <div x-show="open" 
+                        <div x-show="open" @click.outside="open = false"
                             x-transition:enter="transition ease-out duration-100"
                             x-transition:enter-start="transform opacity-0 scale-95"
                             x-transition:enter-end="transform opacity-100 scale-100"

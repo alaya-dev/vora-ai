@@ -14,10 +14,16 @@ class LocalizationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (session()->has('locale')) {
-            $locale = session()->get('locale');
-            if (in_array($locale, ['en', 'fr', 'ar'])) {
-                App::setLocale($locale);
+        $locale = $request->query('lang') ?: $request->query('locale');
+
+        if ($locale && in_array($locale, ['en', 'fr', 'ar'])) {
+            session(['locale' => $locale]);
+            session()->save();
+            \Illuminate\Support\Facades\App::setLocale($locale);
+        } elseif (session()->has('locale')) {
+            $savedLocale = session()->get('locale');
+            if (in_array($savedLocale, ['en', 'fr', 'ar'])) {
+                \Illuminate\Support\Facades\App::setLocale($savedLocale);
             }
         }
 

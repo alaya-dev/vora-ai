@@ -29,8 +29,15 @@ return [
         ],
         'password' => [
             'required' => 'Le mot de passe est requis',
-            'min' => 'Le mot de passe doit contenir au moins 8 caractères',
+            'min' => [
+                'string' => 'Le mot de passe doit contenir au moins 8 caractères',
+            ],
             'confirmed' => 'La confirmation du mot de passe ne correspond pas',
+            'current_password' => 'Le mot de passe saisi est incorrect.',
+        ],
+        'current_password' => [
+            'required' => 'Le mot de passe actuel est requis',
+            'current_password' => 'Le mot de passe actuel saisi est incorrect.',
         ],
     ],
     'attributes' => [

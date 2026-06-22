@@ -29,8 +29,15 @@ return [
         ],
         'password' => [
             'required' => 'Password is required',
-            'min' => 'Password must be at least 8 characters',
+            'min' => [
+                'string' => 'Password must be at least 8 characters',
+            ],
             'confirmed' => 'Password confirmation does not match',
+            'current_password' => 'The password you entered is incorrect.',
+        ],
+        'current_password' => [
+            'required' => 'Current password is required',
+            'current_password' => 'The password you entered is incorrect.',
         ],
     ],
     'attributes' => [

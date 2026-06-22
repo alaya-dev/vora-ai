@@ -134,5 +134,7 @@
     "email_reset.expiry": "Ce lien de réinitialisation expirera dans :count minutes.",
     "email_reset.outro": "Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise.",
     "email_reset.regards": "Cordialement,",
-    "email_reset.trouble": "Si vous rencontrez des difficultés avec le bouton \":action\", copiez et collez l'URL ci-dessous dans votre navigateur :"
+    "email_reset.trouble": "Si vous rencontrez des difficultés avec le bouton \":action\", copiez et collez l'URL ci-dessous dans votre navigateur :",
+    "Not Found": "Non trouvé",
+    "Enter your email and choose a new secure password.": "Entrez votre e-mail et choisissez un nouveau mot de passe sécurisé."
 }
