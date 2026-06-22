@@ -1,5 +1,17 @@
 <x-admin-layout>
-    <div x-data="{ showDeleteModal: false, deleteAction: '', userName: '' }">
+    <div x-data="{ 
+        showDeleteModal: false, 
+        deleteAction: '', 
+        userName: '',
+        showCreateModal: {{ (old('form_action') === 'create' && $errors->any()) ? 'true' : 'false' }},
+        showEditModal: {{ (old('form_action') === 'edit' && $errors->any()) ? 'true' : 'false' }},
+        editAction: '{{ old('form_action') === 'edit' ? route('admin.users.update', old('edit_user_id', 0)) : '' }}',
+        editUserId: '{{ old('form_action') === 'edit' ? old('edit_user_id') : '' }}',
+        editUser: {
+            name: '{{ old('form_action') === 'edit' ? old('name') : '' }}',
+            email: '{{ old('form_action') === 'edit' ? old('email') : '' }}'
+        }
+    }">
         <!-- Header & Action Button -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
@@ -7,12 +19,12 @@
                 <p class="mt-1.5 text-sm text-gray-500">{{ __('users.desc') }}</p>
             </div>
             
-            <a href="{{ route('admin.users.create') }}" class="inline-flex items-center justify-center px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition duration-150">
+            <button type="button" @click="showCreateModal = true" class="inline-flex items-center justify-center px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition duration-150">
                 <svg class="w-5 h-5 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
                 {{ __('users.add') }}
-            </a>
+            </button>
         </div>
 
         <!-- Search Bar -->
@@ -86,11 +98,14 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <div class="flex items-center justify-center space-x-2.5 rtl:space-x-reverse">
                                         <!-- Edit -->
-                                        <a href="{{ route('admin.users.edit', $user) }}" class="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="{{ __('users.edit') }}">
+                                        <button type="button" 
+                                            @click="editAction = '{{ route('admin.users.update', $user) }}'; editUserId = '{{ $user->id }}'; editUser = { name: '{{ addslashes($user->name) }}', email: '{{ addslashes($user->email) }}' }; showEditModal = true;"
+                                            class="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" 
+                                            title="{{ __('users.edit') }}">
                                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
-                                        </a>
+                                        </button>
                                         <!-- Delete -->
                                         @if(auth()->id() !== $user->id)
                                             <button type="button" 
@@ -191,6 +206,204 @@
                         </button>
                     </form>
                 </div>
+            </div>
+        </div>
+
+        <!-- Alpine.js Create User Modal -->
+        <div x-show="showCreateModal" 
+            class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-4" 
+            style="display: none;"
+            role="dialog" 
+            aria-modal="true">
+            
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity" 
+                x-show="showCreateModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showCreateModal = false"></div>
+
+            <!-- Modal Content -->
+            <div class="bg-white border border-gray-200/80 rounded-2xl overflow-hidden shadow-2xl max-w-md w-full z-10 p-6 transform transition-all"
+                x-show="showCreateModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4 sm:translate-y-0"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-4 sm:translate-y-0">
+                
+                <div class="mb-5 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">{{ __('users.add') }}</h3>
+                    <button type="button" @click="showCreateModal = false" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <form action="{{ route('admin.users.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="form_action" value="create">
+
+                    <!-- Name Field -->
+                    <div>
+                        <label for="create_name" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('users.form.name') }}</label>
+                        <input type="text" name="name" id="create_name" value="{{ old('form_action') === 'create' ? old('name') : '' }}" required placeholder="John Doe"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'create') @error('name') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'create')
+                            @error('name')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="create_email" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('users.form.email') }}</label>
+                        <input type="email" name="email" id="create_email" value="{{ old('form_action') === 'create' ? old('email') : '' }}" required placeholder="john@example.com"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'create') @error('email') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'create')
+                            @error('email')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="create_password" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('users.form.password') }}</label>
+                        <input type="password" name="password" id="create_password" required placeholder="••••••••"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'create') @error('password') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'create')
+                            @error('password')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Password Confirmation -->
+                    <div>
+                        <label for="create_password_confirmation" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('auth.confirm_password') }}</label>
+                        <input type="password" name="password_confirmation" id="create_password_confirmation" required placeholder="••••••••"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition duration-150 text-sm">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="pt-4 border-t border-gray-100 flex justify-end space-x-3 rtl:space-x-reverse">
+                        <button type="button" @click="showCreateModal = false" class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-100 transition duration-150">
+                            {{ __('users.cancel') }}
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition duration-150">
+                            {{ __('users.form.save') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Alpine.js Edit User Modal -->
+        <div x-show="showEditModal" 
+            class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-4" 
+            style="display: none;"
+            role="dialog" 
+            aria-modal="true">
+            
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity" 
+                x-show="showEditModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditModal = false"></div>
+
+            <!-- Modal Content -->
+            <div class="bg-white border border-gray-200/80 rounded-2xl overflow-hidden shadow-2xl max-w-md w-full z-10 p-6 transform transition-all"
+                x-show="showEditModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4 sm:translate-y-0"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-4 sm:translate-y-0">
+                
+                <div class="mb-5 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">{{ __('users.edit') }}</h3>
+                    <button type="button" @click="showEditModal = false" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <form :action="editAction" method="POST" class="space-y-4">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="form_action" value="edit">
+                    <input type="hidden" name="edit_user_id" :value="editUserId">
+
+                    <!-- Name Field -->
+                    <div>
+                        <label for="edit_name" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('users.form.name') }}</label>
+                        <input type="text" name="name" id="edit_name" x-model="editUser.name" required placeholder="John Doe"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'edit') @error('name') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'edit')
+                            @error('name')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="edit_email" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('users.form.email') }}</label>
+                        <input type="email" name="email" id="edit_email" x-model="editUser.email" required placeholder="john@example.com"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'edit') @error('email') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'edit')
+                            @error('email')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="edit_password" class="block text-sm font-semibold text-gray-700 mb-1.5">
+                            {{ __('users.form.password') }} <span class="text-xs text-gray-400 font-normal">({{ __('users.form.password_help') }})</span>
+                        </label>
+                        <input type="password" name="password" id="edit_password" placeholder="••••••••"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border @if(old('form_action') === 'edit') @error('password') border-rose-300 focus:ring-rose-500/20 focus:border-rose-500 @else border-gray-200 focus:ring-indigo-500/20 focus:border-indigo-600 @enderror @else border-gray-200 @endif rounded-xl focus:bg-white focus:ring-2 transition duration-150 text-sm">
+                        @if(old('form_action') === 'edit')
+                            @error('password')
+                                <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        @endif
+                    </div>
+
+                    <!-- Password Confirmation -->
+                    <div>
+                        <label for="edit_password_confirmation" class="block text-sm font-semibold text-gray-700 mb-1.5">{{ __('auth.confirm_password') }}</label>
+                        <input type="password" name="password_confirmation" id="edit_password_confirmation" placeholder="••••••••"
+                            class="w-full px-4 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition duration-150 text-sm">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="pt-4 border-t border-gray-100 flex justify-end space-x-3 rtl:space-x-reverse">
+                        <button type="button" @click="showEditModal = false" class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-100 transition duration-150">
+                            {{ __('users.cancel') }}
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition duration-150">
+                            {{ __('users.form.update') }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 

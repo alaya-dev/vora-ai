@@ -35,9 +35,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(): RedirectResponse
     {
-        return view('admin.users.create');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -48,15 +48,14 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
-            'role' => ['required', Rule::in(['admin', 'user'])],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'user',
         ]);
 
         return redirect()->route('admin.users.index')
@@ -66,9 +65,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): View
+    public function edit(User $user): RedirectResponse
     {
-        return view('admin.users.edit', compact('user'));
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -79,14 +78,13 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'password' => ['nullable', Rules\Password::defaults()],
-            'role' => ['required', Rule::in(['admin', 'user'])],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
+            'role' => 'user',
         ];
 
         if ($request->filled('password')) {
