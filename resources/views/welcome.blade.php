@@ -54,7 +54,7 @@
                 <!-- CTA & Language switcher -->
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <!-- Language switcher dropdown -->
-                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-1.5 rtl:space-x-reverse px-2.5 py-1.5 bg-slate-50 border border-slate-100 rounded-xl hover:bg-slate-100 text-xs font-bold text-slate-600 transition">
                             <span>
                                 @if(app()->getLocale() === 'en')
@@ -70,7 +70,7 @@
                             </svg>
                         </button>
                         
-                        <div x-show="open" 
+                        <div x-show="open" @click.outside="open = false"
                             x-transition:enter="transition ease-out duration-100"
                             x-transition:enter-start="transform opacity-0 scale-95"
                             x-transition:enter-end="transform opacity-100 scale-100"

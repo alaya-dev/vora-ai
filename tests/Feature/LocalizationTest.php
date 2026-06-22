@@ -113,4 +113,25 @@ class LocalizationTest extends TestCase
             }
         }
     }
+
+    /**
+     * Test that missing translation keys are logged with locale and URL.
+     */
+    public function test_missing_translation_keys_are_logged(): void
+    {
+        $key = 'non_existent_key_for_testing_123';
+
+        \Illuminate\Support\Facades\Log::shouldReceive('warning')
+            ->once()
+            ->with(\Mockery::on(function ($message) use ($key) {
+                return str_contains($message, "Missing translation key: '{$key}'") 
+                    && str_contains($message, "for locale:")
+                    && str_contains($message, "at URL:");
+            }));
+
+        $translated = __($key);
+
+        // Verify that the UI fallback is still the key itself (does not break UI)
+        $this->assertEquals($key, $translated);
+    }
 }

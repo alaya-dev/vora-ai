@@ -88,7 +88,7 @@
             <div class="flex-1 bg-white flex flex-col justify-center items-center p-6 sm:p-12 lg:p-20 relative min-h-screen">
                 
                 <!-- Floating Language Switcher for Guest Pages inside RIGHT PANEL -->
-                <div class="absolute top-6 end-8 z-50" x-data="{ open: false }" @click.outside="open = false">
+                <div class="absolute top-6 end-8 z-50" x-data="{ open: false }">
                     <button @click="open = !open" class="flex items-center space-x-1.5 rtl:space-x-reverse px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-xl hover:bg-slate-100 text-xs font-bold text-slate-600 transition duration-150">
                         <span>
                             @if(app()->getLocale() === 'en')
@@ -104,7 +104,7 @@
                         </svg>
                     </button>
                     
-                    <div x-show="open" 
+                    <div x-show="open" @click.outside="open = false"
                         x-transition:enter="transition ease-out duration-100"
                         x-transition:enter-start="transform opacity-0 scale-95"
                         x-transition:enter-end="transform opacity-100 scale-100"

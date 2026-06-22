@@ -119,5 +119,20 @@
     "auth_ui.show_password": "Show",
     "auth_ui.hide_password": "Hide",
     "auth_ui.dont_have_account_question": "Don't have an account?",
-    "auth_ui.already_registered_question": "Already registered?"
+    "auth_ui.already_registered_question": "Already registered?",
+    "GO": "GO",
+    "NO GO": "NO GO",
+    "Forbidden": "Forbidden",
+    "Unauthorized": "Unauthorized",
+    "This action is unauthorized.": "This action is unauthorized.",
+    "This is a secure area of the application. Please confirm your password before continuing.": "This is a secure area of the application. Please confirm your password before continuing.",
+    "Confirm": "Confirm",
+    "email_reset.subject": "Reset Password Notification",
+    "email_reset.greeting": "Hello!",
+    "email_reset.intro": "You are receiving this email because we received a password reset request for your account.",
+    "email_reset.action": "Reset Password",
+    "email_reset.expiry": "This password reset link will expire in :count minutes.",
+    "email_reset.outro": "If you did not request a password reset, no further action is required.",
+    "email_reset.regards": "Regards,",
+    "email_reset.trouble": "If you're having trouble clicking the \":action\" button, copy and paste the URL below into your web browser:"
 }

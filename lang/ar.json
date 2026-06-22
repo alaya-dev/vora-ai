@@ -119,5 +119,20 @@
     "auth_ui.show_password": "عرض",
     "auth_ui.hide_password": "إخفاء",
     "auth_ui.dont_have_account_question": "ليس لديك حساب؟",
-    "auth_ui.already_registered_question": "مسجل بالفعل؟"
+    "auth_ui.already_registered_question": "مسجل بالفعل؟",
+    "GO": "موافق",
+    "NO GO": "غير موافق",
+    "Forbidden": "غير مسموح",
+    "Unauthorized": "غير مصرح به",
+    "This action is unauthorized.": "هذا الإجراء غير مصرح به.",
+    "This is a secure area of the application. Please confirm your password before continuing.": "هذه منطقة آمنة من التطبيق. يرجى تأكيد كلمة المرور الخاصة بك قبل المتابعة.",
+    "Confirm": "تأكيد",
+    "email_reset.subject": "إشعار إعادة تعيين كلمة المرور",
+    "email_reset.greeting": "مرحباً !",
+    "email_reset.intro": "تلقيت هذا البريد الإلكتروني لأننا تلقينا طلباً لإعادة تعيين كلمة المرور لحسابك.",
+    "email_reset.action": "إعادة تعيين كلمة المرور",
+    "email_reset.expiry": "ستنتهي صلاحية رابط إعادة تعيين كلمة المرور هذا خلال :count دقيقة.",
+    "email_reset.outro": "إذا لم تطلب إعادة تعيين كلمة المرور، فلا داعي لاتخاذ أي إجراء آخر.",
+    "email_reset.regards": "مع تحياتنا،",
+    "email_reset.trouble": "إذا كنت تواجه صعوبة في النقر على زر \":action\"، فقم بنسخ عنوان URL أدناه ولصقه في متصفح الويب الخاص بك:"
 }

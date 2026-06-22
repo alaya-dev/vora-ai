@@ -119,5 +119,20 @@
     "auth_ui.show_password": "Afficher",
     "auth_ui.hide_password": "Masquer",
     "auth_ui.dont_have_account_question": "Pas encore de compte ?",
-    "auth_ui.already_registered_question": "Déjà inscrit ?"
+    "auth_ui.already_registered_question": "Déjà inscrit ?",
+    "GO": "GO",
+    "NO GO": "NO GO",
+    "Forbidden": "Accès interdit",
+    "Unauthorized": "Non autorisé",
+    "This action is unauthorized.": "Cette action n'est pas autorisée.",
+    "This is a secure area of the application. Please confirm your password before continuing.": "Il s'agit d'une zone sécurisée de l'application. Veuillez confirmer votre mot de passe avant de continuer.",
+    "Confirm": "Confirmer",
+    "email_reset.subject": "Notification de réinitialisation de mot de passe",
+    "email_reset.greeting": "Bonjour !",
+    "email_reset.intro": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.",
+    "email_reset.action": "Réinitialiser le mot de passe",
+    "email_reset.expiry": "Ce lien de réinitialisation expirera dans :count minutes.",
+    "email_reset.outro": "Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise.",
+    "email_reset.regards": "Cordialement,",
+    "email_reset.trouble": "Si vous rencontrez des difficultés avec le bouton \":action\", copiez et collez l'URL ci-dessous dans votre navigateur :"
 }
