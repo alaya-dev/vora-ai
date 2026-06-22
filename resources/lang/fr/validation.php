@@ -17,6 +17,22 @@ return [
         'symbols' => 'Le mot de passe doit contenir au moins un symbole.',
         'uncompromised' => 'Le mot de passe fourni est apparu dans une fuite de données. Veuillez choisir un autre mot de passe.',
     ],
+    'custom' => [
+        'name' => [
+            'required' => 'Le nom est requis',
+            'regex' => 'Le nom ne doit pas contenir de chiffres ou de caractères spéciaux',
+        ],
+        'email' => [
+            'required' => 'L\'e-mail est requis',
+            'email' => 'Le format de l\'e-mail est invalide',
+            'unique' => 'L\'adresse e-mail existe déjà',
+        ],
+        'password' => [
+            'required' => 'Le mot de passe est requis',
+            'min' => 'Le mot de passe doit contenir au moins 8 caractères',
+            'confirmed' => 'La confirmation du mot de passe ne correspond pas',
+        ],
+    ],
     'attributes' => [
         'name' => 'nom',
         'email' => 'e-mail',

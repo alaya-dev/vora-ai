@@ -76,6 +76,69 @@ class UserCrudTest extends TestCase
         $response->assertSessionHasErrors(['password']);
     }
 
+    public function test_admin_cannot_create_user_with_invalid_name(): void
+    {
+        // Name with number
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.users.store'), [
+                'name' => 'John Doe 123',
+                'email' => 'valid@vora.ai',
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+            ]);
+        $response->assertSessionHasErrors(['name']);
+
+        // Name with special characters
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.users.store'), [
+                'name' => 'John @ Doe',
+                'email' => 'valid2@vora.ai',
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+            ]);
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    public function test_admin_cannot_create_user_with_invalid_email(): void
+    {
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.users.store'), [
+                'name' => 'Valid Name',
+                'email' => 'invalid-email',
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+            ]);
+        $response->assertSessionHasErrors(['email']);
+    }
+
+    public function test_admin_cannot_create_user_with_duplicate_email(): void
+    {
+        $existing = User::factory()->create([
+            'email' => 'existing@vora.ai',
+        ]);
+
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.users.store'), [
+                'name' => 'Valid Name',
+                'email' => 'existing@vora.ai',
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+            ]);
+        $response->assertSessionHasErrors(['email']);
+    }
+
+    public function test_admin_cannot_create_user_with_short_password(): void
+    {
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.users.store'), [
+                'name' => 'Valid Name',
+                'email' => 'valid@vora.ai',
+                'password' => '1234567',
+                'password_confirmation' => '1234567',
+            ]);
+        $response->assertSessionHasErrors(['password']);
+    }
+
     public function test_admin_can_update_user_and_force_role_user(): void
     {
         $userToEdit = User::factory()->create([
@@ -107,7 +170,7 @@ class UserCrudTest extends TestCase
 
         $response = $this->actingAs($this->admin)
             ->put(route('admin.users.update', $userToEdit), [
-                'name' => $userToEdit->name,
+                'name' => 'John Doe',
                 'email' => $userToEdit->email,
                 'password' => 'newpassword123',
                 'password_confirmation' => 'newpassword123',
@@ -123,7 +186,7 @@ class UserCrudTest extends TestCase
 
         $response = $this->actingAs($this->admin)
             ->put(route('admin.users.update', $userToEdit), [
-                'name' => $userToEdit->name,
+                'name' => 'John Doe',
                 'email' => $userToEdit->email,
                 'password' => 'newpassword123',
                 'password_confirmation' => 'mismatched',
